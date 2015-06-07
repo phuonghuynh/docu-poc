@@ -29,6 +29,6 @@ appender("FILE", RollingFileAppender) {
   }
 }
 
-logger("com.phuonghuynh", ALL, ["CONSOLE", "FILE"], Boolean.FALSE)
+logger("estalea.ir.membersite.accounting.w9", ALL, ["CONSOLE", "FILE"], Boolean.FALSE)
 
 root(ERROR, ["CONSOLE", "FILE"])
