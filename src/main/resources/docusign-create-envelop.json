@@ -1,14 +1,16 @@
 {
-  "emailSubject": "Test sending document",
-  "emailBlurb": "Test email blurb",
+  "status": "Sent",
   "templateId": "%s",
-  "brandId": "%s",
-  "status": "sent",
   "eventNotification": {
-    "RecipientEvents": [{"recipientEventStatusCode": "Completed"}],
-    "EnvelopeEvents": [{"envelopeEventStatusCode": "completed"}],
-    "includeSenderAccountasCustomField": "true",
-    "url": "https://localhost:8080/docusign/complete"
+    "RecipientEvents": [
+      {
+        "recipientEventStatusCode": "Completed"
+      }
+    ],
+    "EnvelopeEvents": [
+      {
+        "envelopeEventStatusCode": "completed"
+      }
+    ]
   }
 }
-

@@ -2,6 +2,7 @@
 
 <head>
   <title>POC FW9 Application</title>
+  <script src="jquery-1.11.0.min.js" language="JavaScript"></script>
 </head>
 
 <body ng-app="APP">
@@ -12,13 +13,14 @@
   </iframe>
 </div>
 
-<!--<button id="login">Login</button>-->
+<script lang="javascript">
+  $(document).ready(function() {
+    $.get("docusign/createEnvelope", function(data) {
+      $("#docusign").attr("src", data.widgetUrl);
+    });
+  });
+</script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript" src="js/angular.js"></script>
-<script type="text/javascript" src="js/angular-route.js"></script>
-<script type="text/javascript" src="js/satellizer.js"></script>
-<script src="js/app.js" language="JavaScript"></script>
 </body>
 
 </html>

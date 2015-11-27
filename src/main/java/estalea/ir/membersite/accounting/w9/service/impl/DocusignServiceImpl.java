@@ -83,14 +83,14 @@ public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.
     String accountId = loginInfo.getObject().getJSONArray("loginAccounts").getJSONObject(0).getString("accountId");
     LOGGER.debug("Account id = {}", accountId);
 
-    String brandId = getRecipientBrandIdDefault(accountId);
-    LOGGER.debug("Brand id = {}", brandId);
+//    String brandId = getRecipientBrandIdDefault(accountId);
+//    LOGGER.debug("Brand id = {}", brandId);
 
     String templateId = getTemplateId(accountId, templateName);
     LOGGER.debug("Template Name = {} , Template id = {}", templateName, templateId);
 
     if (templateId != null) {
-      String envelopeId = createEnvelope(accountId, templateId, brandId);
+      String envelopeId = createEnvelope(accountId, templateId);
       LOGGER.debug("EnvelopeId: {}", envelopeId);
 
       String viewUrl = createEnvelopeView(accountId, envelopeId);
@@ -104,7 +104,7 @@ public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.
     JsonNode view = Unirest.post(String.format(EMBEDDED_VIEW_URL, accountId, envelopeId))
       .header("X-DocuSign-Authentication", getLoginInfoJson())
       .header("Content-Type", "application/json").header("accept", "application/json")
-      .body(getViewJson(envelopeId)).asJson().getBody();
+      .body(getEnvelopeViewJson(envelopeId)).asJson().getBody();
     return view.getObject().getString("url");
   }
 
@@ -130,9 +130,9 @@ public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.
     return brandInfo.getObject().getString("recipientBrandIdDefault");
   }
 
-  private String createEnvelope(String accountId, String templateId, String brandId) throws IOException, UnirestException {
+  private String createEnvelope(String accountId, String templateId) throws IOException, UnirestException {
     String createEnvelope = FileUtils.readFileToString(docusignCreateEnvelopRes.getFile(), "UTF-8");//new String(Files.readAllBytes(Paths.get(docusignCreateEnvelopRes.getURI())));
-    createEnvelope = String.format(createEnvelope, templateId, brandId);
+    createEnvelope = String.format(createEnvelope, templateId);
     JsonNode envelope = Unirest.post(String.format(ENVELOP_URL, accountId))
       .header("X-DocuSign-Authentication", getLoginInfoJson())
       .header("Content-Type", "application/json").header("accept", "application/json")
@@ -141,7 +141,7 @@ public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.
     return envelopeId;
   }
 
-  private String getViewJson(String envelopeId) throws IOException {
+  private String getEnvelopeViewJson(String envelopeId) throws IOException {
     String consoleView = FileUtils.readFileToString(docusignViewRes.getFile(), "UTF-8");//new String(Files.readAllBytes(Paths.get(docusignViewRes.getURI()))).replace("\n", "").replace("\r", "");
     return String.format(consoleView, envelopeId);
   }
