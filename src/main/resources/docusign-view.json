@@ -1,6 +1,6 @@
 {
   "authenticationMethod": "none",
   "email": "anchoish@gmail.com",
-  "returnUrl": "%s",
+  "returnUrl": "https://localhost:8080/docusign/complete/%s",
   "userName": "anchoish"
 }
