@@ -1,9 +1,9 @@
-package estalea.ir.membersite.accounting.w9.ws;
+package com.github.phuonghuynh.ws;
 
-import estalea.ir.membersite.accounting.w9.ws.model.TinServiceUser;
-import estalea.ir.membersite.accounting.w9.ws.model.ServiceStatusResult;
-import estalea.ir.membersite.accounting.w9.ws.model.TinName;
-import estalea.ir.membersite.accounting.w9.ws.model.ValidateTinNameResult;
+import com.github.phuonghuynh.ws.model.ServiceStatusResult;
+import com.github.phuonghuynh.ws.model.TinName;
+import com.github.phuonghuynh.ws.model.ValidateTinNameResult;
+import com.github.phuonghuynh.ws.model.TinServiceUser;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

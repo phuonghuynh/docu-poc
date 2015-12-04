@@ -1,9 +1,9 @@
-package estalea.ir.membersite.accounting.w9.service;
+package com.github.phuonghuynh.service;
 
-import estalea.ir.membersite.accounting.w9.ws.TinWebService;
-import estalea.ir.membersite.accounting.w9.ws.model.TinName;
-import estalea.ir.membersite.accounting.w9.ws.model.TinServiceUser;
-import estalea.ir.membersite.accounting.w9.ws.model.ValidateTinNameResult;
+import com.github.phuonghuynh.ws.TinWebService;
+import com.github.phuonghuynh.ws.model.TinName;
+import com.github.phuonghuynh.ws.model.TinServiceUser;
+import com.github.phuonghuynh.ws.model.ValidateTinNameResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

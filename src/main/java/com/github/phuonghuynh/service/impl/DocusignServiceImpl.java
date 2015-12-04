@@ -1,11 +1,12 @@
-package estalea.ir.membersite.accounting.w9.service.impl;
+package com.github.phuonghuynh.service.impl;
 
+import com.github.phuonghuynh.dto.DocusignInfo;
+import com.github.phuonghuynh.service.DocusignService;
 import com.jayway.jsonpath.JsonPath;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import estalea.ir.membersite.accounting.w9.dto.DocusignInfo;
-import estalea.ir.membersite.accounting.w9.dto.SocialReqResp;
+import com.github.phuonghuynh.dto.SocialReqResp;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,7 +21,7 @@ import java.io.IOException;
  * Created by phuonghqh on 6/7/15.
  */
 @Service
-public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.service.DocusignService {
+public class DocusignServiceImpl implements DocusignService {
 
   @Value("classpath:docusign-auth.json")
   private org.springframework.core.io.Resource docusignAuthRes;

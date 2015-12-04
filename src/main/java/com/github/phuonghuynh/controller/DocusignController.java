@@ -1,10 +1,10 @@
-package estalea.ir.membersite.accounting.w9.controller;
+package com.github.phuonghuynh.controller;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-import estalea.ir.membersite.accounting.w9.dto.DocusignInfo;
-import estalea.ir.membersite.accounting.w9.dto.SocialReqResp;
-import estalea.ir.membersite.accounting.w9.service.DocusignService;
-import estalea.ir.membersite.accounting.w9.service.TinCheckService;
+import com.github.phuonghuynh.dto.DocusignInfo;
+import com.github.phuonghuynh.dto.SocialReqResp;
+import com.github.phuonghuynh.service.DocusignService;
+import com.github.phuonghuynh.service.TinCheckService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
