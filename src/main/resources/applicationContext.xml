@@ -32,7 +32,7 @@
   <bean id="loggingOut" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
 
   <jaxws:client id="hatsGTDWebservice" address="https://www.tincheck.com/pvsws/pvsservice.asmx"
-                serviceClass="com.github.phuonghuynh.ws.TinWebService">
+                serviceClass="estalea.ir.membersite.accounting.w9.ws.TinWebService">
     <jaxws:inInterceptors>
       <ref bean="loggingIn" />
     </jaxws:inInterceptors>

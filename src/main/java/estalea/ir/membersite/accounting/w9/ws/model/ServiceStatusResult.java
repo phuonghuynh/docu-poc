@@ -1,4 +1,4 @@
-package com.github.phuonghuynh.ws.model;
+package estalea.ir.membersite.accounting.w9.ws.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

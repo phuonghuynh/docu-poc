@@ -1,8 +1,8 @@
-package com.github.phuonghuynh.service;
+package estalea.ir.membersite.accounting.w9.service;
 
-import com.github.phuonghuynh.dto.DocusignInfo;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.github.phuonghuynh.dto.SocialReqResp;
+import estalea.ir.membersite.accounting.w9.dto.DocusignInfo;
+import estalea.ir.membersite.accounting.w9.dto.SocialReqResp;
 
 import java.io.IOException;
 import java.io.InputStream;

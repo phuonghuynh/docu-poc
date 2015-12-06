@@ -1,4 +1,4 @@
-package com.github.phuonghuynh.dto;
+package estalea.ir.membersite.accounting.w9.dto;
 
 /**
  * Created by phuonghqh on 6/7/15.
