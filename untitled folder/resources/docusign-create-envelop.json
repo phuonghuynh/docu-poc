@@ -1,0 +1,16 @@
+{
+  "status": "Sent",
+  "templateId": "%s",
+  "eventNotification": {
+    "RecipientEvents": [
+      {
+        "recipientEventStatusCode": "Completed"
+      }
+    ],
+    "EnvelopeEvents": [
+      {
+        "envelopeEventStatusCode": "completed"
+      }
+    ]
+  }
+}
