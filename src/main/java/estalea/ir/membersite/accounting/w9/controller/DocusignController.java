@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
 
 /**
  * Created by phuonghqh on 4/4/15.
@@ -29,6 +34,24 @@ public class DocusignController {
 
   @Resource
   private TinCheckService tinCheckService;
+
+  @ResponseBody
+  @RequestMapping("/docusign/download/{envelopeId}")
+  public void downloadCompletedEnvelope(@PathVariable String envelopeId, HttpServletResponse httpResponse) throws IOException, UnirestException {
+    InputStream envelopeInputStream = docusignService.downloadCompletedEnvelop(envelopeId);
+    ReadableByteChannel inputChannel = Channels.newChannel(envelopeInputStream);
+    WritableByteChannel outputChannel = Channels.newChannel(httpResponse.getOutputStream());
+
+    //example: 779b4559-ace4-49ba-a124-81c5ba167abc
+    ByteBuffer buffer = ByteBuffer.allocateDirect(1024);//in bytes
+    long size = 0;
+    while (inputChannel.read(buffer) != -1) {
+      buffer.flip();
+      size += outputChannel.write(buffer);
+      buffer.clear();
+    }
+    LOGGER.debug("Download envelope {}, size = {}", envelopeId, size);
+  }
 
   @RequestMapping("/docusign/complete/{envelopeId}")
   public void complete(@PathVariable String envelopeId, HttpServletResponse httpResponse) throws IOException, UnirestException {
@@ -45,7 +68,7 @@ public class DocusignController {
     else {
       httpResponse.getWriter().write(String.format("SSN %s is NOT correct for %s", ssn, name));
     }
-
+//fcffb3a5-593e-4d33-bf13-eaea5219fd04
 
 //    JSONObject tabsJson = recipients.getObject().getJSONArray("signers").getJSONObject(0).getJSONObject("tabs");
 

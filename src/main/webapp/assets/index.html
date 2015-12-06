@@ -9,6 +9,10 @@
 <div ng-view></div>
 <div ng-controller="AppController">
   <div style="height: 50px; width: 1px;"></div>
+  <label>Envelope id</label>
+  <input type="text" name="envelope">
+  <input type="button" value="download">
+
   <iframe  id="docusign" style="width: 80%; height: 80%;">
   </iframe>
 </div>
@@ -17,6 +21,14 @@
   $(document).ready(function() {
     $.get("docusign/createEnvelope", function(data) {
       $("#docusign").attr("src", data.widgetUrl);
+    });
+
+    $("input[type=button]").click(function() {
+      var envelopeId = $("input[name=envelope]").val();
+      window.location = "docusign/download/" + envelopeId;
+//      $.get("docusign/download/" + envelopeId, function() {
+//        console.log(arguments);
+//      });
     });
   });
 </script>

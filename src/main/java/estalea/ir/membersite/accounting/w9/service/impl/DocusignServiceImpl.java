@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by phuonghqh on 6/7/15.
@@ -36,8 +37,6 @@ public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.
 
   private static final String BASE_URL = "https://demo.docusign.net/restapi/v2/";
 
-  private static final String BRANDS_URL = BASE_URL + "accounts/%s/brands";
-
   private static final String TEMPLATE_URL = BASE_URL + "accounts/%s/templates";
 
   private static final String ENVELOP_URL = BASE_URL + "accounts/%s/envelopes";
@@ -46,13 +45,15 @@ public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.
 
   private static final String EMBEDDED_VIEW_URL = BASE_URL + "accounts/%s/envelopes/%s/views/recipient";
 
+  private static final String DOWNLOAD_COMPLETED_ENVELOPE = BASE_URL + "accounts/%s/envelopes/%s/documents/combined?show_changes=true&watermark=false&certificate=true";
+
   private static final Logger LOGGER = LoggerFactory.getLogger(DocusignServiceImpl.class);
 
-  @Override
   public DocusignInfo extractSSN(String envelopeId) throws IOException, UnirestException {
     JsonNode loginInfo = Unirest.get(BASE_URL + "login_information")
       .header("X-DocuSign-Authentication", getLoginInfoJson())
       .asJson().getBody();
+
     String accountId = loginInfo.getObject().getJSONArray("loginAccounts").getJSONObject(0).getString("accountId");
     LOGGER.debug("Account id = {}", accountId);
 
@@ -74,7 +75,6 @@ public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.
     return DocusignInfo.DocusignInfoBuilder.docusignInfo().withName(name).withSsn(ssn).build();
   }
 
-  @Override
   public SocialReqResp createEnvelope() throws IOException, UnirestException {
     JsonNode loginInfo = Unirest.get(BASE_URL + "login_information")
       .header("X-DocuSign-Authentication", getLoginInfoJson())
@@ -82,9 +82,6 @@ public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.
 
     String accountId = loginInfo.getObject().getJSONArray("loginAccounts").getJSONObject(0).getString("accountId");
     LOGGER.debug("Account id = {}", accountId);
-
-//    String brandId = getRecipientBrandIdDefault(accountId);
-//    LOGGER.debug("Brand id = {}", brandId);
 
     String templateId = getTemplateId(accountId, templateName);
     LOGGER.debug("Template Name = {} , Template id = {}", templateName, templateId);
@@ -98,6 +95,19 @@ public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.
       return SocialReqResp.SocialReqRespBuilder.socialReqResp().withWidgetUrl(viewUrl).build();
     }
     return null;
+  }
+
+  public InputStream downloadCompletedEnvelop(String envelopId) throws IOException, UnirestException {
+    JsonNode loginInfo = Unirest.get(BASE_URL + "login_information")
+      .header("X-DocuSign-Authentication", getLoginInfoJson())
+      .asJson().getBody();
+
+    String accountId = loginInfo.getObject().getJSONArray("loginAccounts").getJSONObject(0).getString("accountId");
+    LOGGER.debug("Account id = {}", accountId);
+
+    return Unirest.get(String.format(DOWNLOAD_COMPLETED_ENVELOPE, accountId, envelopId))
+      .header("X-DocuSign-Authentication", getLoginInfoJson())
+      .asBinary().getBody();
   }
 
   private String createEnvelopeView(String accountId, String envelopeId) throws IOException, UnirestException {
@@ -121,13 +131,6 @@ public class DocusignServiceImpl implements estalea.ir.membersite.accounting.w9.
       }
     }
     return null;
-  }
-
-  private String getRecipientBrandIdDefault(String accountId) throws IOException, UnirestException {
-    JsonNode brandInfo = Unirest.get(String.format(BRANDS_URL, accountId))
-      .header("X-DocuSign-Authentication", getLoginInfoJson())
-      .asJson().getBody();
-    return brandInfo.getObject().getString("recipientBrandIdDefault");
   }
 
   private String createEnvelope(String accountId, String templateId) throws IOException, UnirestException {
